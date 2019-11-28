@@ -21,7 +21,7 @@ public class RestExceptionHandler {
 	
 	
 	@ExceptionHandler(CategoriaNaoEncontradaException.class)
-	public ResponseEntity<ErroCustomizado> IncorrectPassword(Exception ex, WebRequest request) {
+	public ResponseEntity<ErroCustomizado> CategoriaNaoEncontrada(Exception ex, WebRequest request) {
 		ErroCustomizado errorMessage = new ErroCustomizado(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}

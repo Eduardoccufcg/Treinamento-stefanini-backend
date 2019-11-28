@@ -5,8 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import treinamento.exception.CategoriaNaoEncontradaException;
 import treinamento.model.Categoria;
 import treinamento.repository.CategoriaRepository;
 
@@ -16,9 +19,14 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
-	public List<Categoria> listar() {
+	public ResponseEntity<List<Categoria>> listar() {
 
-		return categoriaRepository.findAll();
+	List<Categoria> lista = categoriaRepository.findAll();
+		
+		if(lista.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lista);
 
 	}
 
@@ -26,14 +34,26 @@ public class CategoriaService {
 		return categoriaRepository.save(categoria);
 	}
 
-	public Optional<Categoria> buscar(Long id) {
-
-		return categoriaRepository.findById(id);
+	public ResponseEntity<Categoria> buscar(Long id) {
+		
+		Optional<Categoria> categoriaBuscadaAux = categoriaRepository.findById(id);
+		if (categoriaBuscadaAux.isPresent()) {
+			Categoria categoriaBuscada = categoriaBuscadaAux.get();
+			return ResponseEntity.status(HttpStatus.OK).body(categoriaBuscada);
+		} else {
+			throw new CategoriaNaoEncontradaException("Categoria não encontrada");
+		}
 	}
 
-	public void deletar(Long id) {
+	public ResponseEntity<Categoria> deletar(Long id) {
 		
-		categoriaRepository.deleteById(id);
+		Optional<Categoria> categoriaBuscadaAux = this.categoriaRepository.findById(id);
+		if (categoriaBuscadaAux.isPresent()) {
+			categoriaRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} else {
+			throw new CategoriaNaoEncontradaException("Categoria não encontrada");
+		}
 		
 	}
 
@@ -49,7 +69,7 @@ public class CategoriaService {
 			return categoriaAux;
 			
 		}else {
-			return null;
+			throw new CategoriaNaoEncontradaException("Categoria não encontrada");
 		}
 	
 	}

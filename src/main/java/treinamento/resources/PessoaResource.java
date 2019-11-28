@@ -14,50 +14,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import treinamento.model.Categoria;
-import treinamento.service.CategoriaService;
+import treinamento.model.Pessoa;
+import treinamento.service.PessoaService;
 
 @RestController
-@RequestMapping({ "/categorias" })
-public class CategoriaResource {
-
+@RequestMapping({ "/pessoas" })
+public class PessoaResource {
+	
 	@Autowired
-	private CategoriaService categoriaService;
+	private PessoaService pessoaService;
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> listar() {
+	public ResponseEntity<List<Pessoa>> listar() {
 		
-		return categoriaService.listar();
+		return pessoaService.listar();
 		
 	}
-
 	@PostMapping
-	public ResponseEntity<Categoria> cadastrar(@RequestBody Categoria categoria) {
+	public ResponseEntity<Pessoa> cadastrar(@RequestBody Pessoa pessoa) {
 
-		Categoria categoriaCadastrada = this.categoriaService.cadastrar(categoria);
-		return ResponseEntity.status(HttpStatus.OK).body(categoriaCadastrada);
+		Pessoa pessoaCadastrada = this.pessoaService.cadastrar(pessoa);
+		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaCadastrada);
 
 	}
-
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> buscar(@PathVariable Long id) {
+	public ResponseEntity<Pessoa> buscar(@PathVariable Long id) {
 
-		return this.categoriaService.buscar(id);
+		return this.pessoaService.buscar(id);
 
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Categoria> deletar(@PathVariable Long id) {
-		return this.categoriaService.deletar(id);
+	public ResponseEntity<Pessoa> deletar(@PathVariable Long id) {
+		return this.pessoaService.deletar(id);
 
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
+	public ResponseEntity<Pessoa> atualizar(@PathVariable Long id, @RequestBody Pessoa categoria) {
 
-		Categoria categoriaAtualizada = categoriaService.atualizar(id, categoria);
+		Pessoa categoriaAtualizada = pessoaService.atualizar(id, categoria);
 		return ResponseEntity.status(HttpStatus.OK).body(categoriaAtualizada);
 
 	}
+	
+	
 
 }
