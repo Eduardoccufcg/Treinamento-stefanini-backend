@@ -25,5 +25,11 @@ public class RestExceptionHandler {
 		ErroCustomizado errorMessage = new ErroCustomizado(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(LancamentoNaoEncontradoException.class)
+	public ResponseEntity<ErroCustomizado> LancamentoNaoEncontradoException(Exception ex, WebRequest request) {
+		ErroCustomizado errorMessage = new ErroCustomizado(new Date(), ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	}
 
 }

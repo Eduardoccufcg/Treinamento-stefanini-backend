@@ -35,7 +35,7 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> cadastrar(@RequestBody Categoria categoria) {
 
 		Categoria categoriaCadastrada = this.categoriaService.cadastrar(categoria);
-		return ResponseEntity.status(HttpStatus.OK).body(categoriaCadastrada);
+		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaCadastrada);
 
 	}
 
