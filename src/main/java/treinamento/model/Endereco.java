@@ -5,27 +5,27 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Endereco implements Serializable{
-	
-/**
+public class Endereco implements Serializable {
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-private String logradouro;
-	
+	private String logradouro;
+
 	private String numero;
-	
+
 	private String complemento;
-	
+
 	private String bairro;
-	
+
 	private String cep;
-	
+
 	private String cidade;
-	
+
 	private String estado;
-	
+
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -81,7 +81,5 @@ private String logradouro;
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-
-	
 
 }
